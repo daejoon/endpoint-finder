@@ -1,8 +1,10 @@
 package com.github.nayacco.restfulhelper
 
+import com.intellij.ide.util.PsiNavigationSupport
 import com.intellij.navigation.ItemPresentation
 import com.intellij.navigation.NavigationItem
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.application.ReadAction
 import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.util.Computable
 import com.intellij.pom.Navigatable
@@ -19,7 +21,19 @@ class RequestMappingItem(val psiElement: PsiElement, private val urlPath: String
 
     override fun getPresentation(): ItemPresentation = RequestMappingItemPresentation()
 
-    override fun navigate(requestFocus: Boolean) = navigationElement?.navigate(requestFocus) ?: Unit
+    override fun navigate(requestFocus: Boolean) = navigationTarget()?.navigate(requestFocus) ?: Unit
+
+    /**
+     * 이동할 소스 위치를 read action 안에서 미리 계산한다.
+     * 최신 IDE는 EDT 이벤트 처리 중에도 read lock을 암묵적으로 잡지 않으므로,
+     * PsiElement.navigate()를 바로 부르면 오프셋 계산(AST 로딩)에서 read access assertion이 발생한다.
+     */
+    internal fun navigationTarget(): Navigatable? = ReadAction.compute<Navigatable?, RuntimeException> {
+        when (val element = navigationElement) {
+            is PsiElement -> PsiNavigationSupport.getInstance().getDescriptor(element)
+            else -> element
+        }
+    }
 
     override fun canNavigate(): Boolean = navigationElement?.canNavigate() ?: false
 
