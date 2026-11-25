@@ -1,0 +1,176 @@
+# 이 파일이 최상위 .editorconfig 임을 표시. 상위 디렉터리 탐색을 여기서 중단한다.
+root = true
+
+[*]
+# 파일 인코딩을 UTF-8 로 고정
+charset = utf-8
+# 파일 마지막에 개행(LF) 삽입 — POSIX 도구 호환 및 diff 깨짐 방지
+insert_final_newline = true
+# 줄 끝 공백 자동 제거를 비활성화 — Markdown 줄바꿈(`  `) 등 유의미한 공백 보호
+trim_trailing_whitespace = true
+
+[*.{java,kt}]
+# 권장 최대 줄 길이(초과 시 Reformat 이 줄바꿈 유도)
+max_line_length = 120
+# IntelliJ 에디터 세로 가이드 라인 위치
+ij_visual_guides = 120
+# 들여쓰기 문자를 공백으로 — 탭 혼용 방지
+indent_style = space
+# 들여쓰기 단위 = 4칸
+indent_size = 4
+
+[*.java]
+# 줄바꿈 후 이어지는 연속 라인은 8칸 들여써서 본문과 시각적으로 구분
+continuation_indent_size = 8
+
+# [마스터 스위치] max_line_length(120) 초과 시 IntelliJ Reformat 이 강제로 줄바꿈을 시도
+# — 이 키가 없으면 다른 *_wrap 옵션들은 "줄을 넘길 때만" 적용되어 긴 줄이 그대로 남는다.
+ij_java_wrap_long_lines = true
+
+# 단순 구문을 한 줄에 유지하지 않도록 하여 길이 초과 시 정상적으로 분리되게 함
+# (특히 람다 본문이 한 줄짜리 표현식이라도 길면 분리되도록 보장)
+ij_java_keep_simple_lambdas_in_one_line = false
+ij_java_keep_simple_methods_in_one_line = false
+ij_java_keep_simple_blocks_in_one_line = false
+ij_java_keep_simple_classes_in_one_line = false
+
+# 이항 연산자: 길이 초과 시 줄바꿈 허용 (a && b && c...)
+# (Spotless alignment_for_relational_operator/shift_operator=16(M_COMPACT_SPLIT) 대응.
+#  산술/논리/비트/문자열연결은 JDT 기본이 이미 16 이다)
+ij_java_binary_operation_wrap = normal
+# 할당 연산자는 '=' 뒤에서 줄바꿈하지 않는다 — 우변이 길면 인자/체인 쪽에서 wrap 한다.
+# normal 로 두면 Spotless(Eclipse)만 '=' 뒤로 우변을 내려 IDE 와 포맷 핑퐁이 발생한다.
+# (Spotless alignment_for_assignment=0(M_NO_ALIGNMENT) 대응)
+ij_java_assignment_wrap = off
+# 줄바꿈 시 연산자를 다음 줄 앞에 배치 — `cond` 다음 줄이 `&& cond2` 로 시작한다.
+# — 이 키를 비워 두면 IntelliJ 내장 기본값(false, 연산자를 이전 줄 끝)이 적용되어
+#   Spotless(wrap_before_*_operator=true)와 결과가 어긋난다. ternary 정책과도 방향을 통일한다.
+ij_java_binary_operation_sign_on_next_line = true
+
+# 제어문 키워드와 `(` 사이 공백 강제: `if(` → `if (`, `for(` → `for (` 등
+# (Spotless insert_space_before_opening_paren_in_if/for/while/switch/synchronized/try/catch="insert" 대응)
+ij_java_space_before_if_parentheses = true
+ij_java_space_before_for_parentheses = true
+ij_java_space_before_while_parentheses = true
+ij_java_space_before_switch_parentheses = true
+ij_java_space_before_synchronized_parentheses = true
+ij_java_space_before_try_parentheses = true
+ij_java_space_before_catch_parentheses = true
+
+# `else` 는 닫는 중괄호와 같은 줄에 유지: `} else {`
+# — 이 키를 비워 두면 IDE 개인 스킴(.idea/codeStyles/Project.xml 의 ELSE_ON_NEW_LINE=true)이 적용되어
+#   IntelliJ 저장 포맷과 Spotless 결과가 서로를 되돌리는 핑퐁이 발생한다.
+# (Spotless insert_new_line_before_else_in_if_statement="do not insert" 대응)
+ij_java_else_on_new_line = false
+
+# 한 줄짜리 body 에도 `{}` 강제 — dangling-else, goto-fail 류 버그 예방
+ij_java_if_brace_force = always
+ij_java_for_brace_force = always
+ij_java_while_brace_force = always
+ij_java_do_while_brace_force = always
+
+# 메서드 호출 인자: 줄을 넘길 때 첫 인자는 '(' 같은 줄, 이후 인자만 각자 줄 (Spotless alignment_for_arguments_in_method_invocation=80 대응)
+ij_java_call_parameters_wrap = on_every_item
+ij_java_call_parameters_new_line_after_left_paren = false
+ij_java_call_parameters_right_paren_on_new_line = false
+# 줄바꿈된 인자를 '(' 컬럼에 정렬하지 않고 continuation indent(8칸) 사용 — Spotless와 동일한 결과 보장
+ij_java_align_multiline_parameters_in_calls = false
+
+# 메서드 선언 파라미터: 동일 정책 - 첫 파라미터는 '(' 같은 줄, 이후만 각자 줄 (Spotless alignment_for_parameters_in_method_declaration=80 대응)
+ij_java_method_parameters_wrap = on_every_item
+ij_java_method_parameters_new_line_after_left_paren = false
+ij_java_method_parameters_right_paren_on_new_line = false
+# 줄바꿈된 파라미터를 '(' 컬럼에 정렬하지 않고 continuation indent(8칸) 사용 — Spotless와 동일한 결과 보장
+ij_java_align_multiline_parameters = false
+
+# throws 절: 줄을 넘길 때 각 예외를 한 줄씩 분리
+ij_java_throws_list_wrap = on_every_item
+ij_java_throws_keyword_wrap = normal
+
+# 타입 선언의 extends/implements: 길이 초과 시 'extends'/'implements' 키워드와 타입을 묶어 다음 줄로
+# (Spotless alignment_for_superclass/superinterfaces_in_type_declaration=16 대응)
+ij_java_extends_list_wrap = normal
+ij_java_extends_keyword_wrap = normal
+
+# annotation 줄바꿈 정책 — Eclipse insert_new_line_after_annotation_on_* 와 정확히 매핑:
+#   - 필드/타입/메서드: split_into_lines  ⇔  Eclipse "insert"
+#       (어노테이션마다 줄바꿈 + 마지막 어노테이션과 코드 사이도 줄바꿈)
+#   - 파라미터/로컬변수: normal + do_not_wrap_after_single_annotation*  ⇔  Eclipse "do not insert"
+#       (단일 어노테이션은 코드와 같은 줄 유지. record 컴포넌트도 파라미터로 분류되어 동일 규칙 적용)
+#       parameter_annotation_wrap=split_into_lines 사용 시 단일 @RequestBody/@HntDescription 만으로도
+#       파라미터가 강제 새 줄로 가는 부작용이 있어 normal 로 완화함.
+# (Spotless insert_new_line_after_annotation_on_field/type/method="insert",
+#  insert_new_line_after_annotation_on_parameter/local_variable="do not insert",
+#  alignment_for_annotations_on_*="49"(M_ONE_PER_LINE_SPLIT|M_FORCE) 대응)
+ij_java_field_annotation_wrap = split_into_lines
+ij_java_class_annotation_wrap = split_into_lines
+ij_java_method_annotation_wrap = split_into_lines
+ij_java_parameter_annotation_wrap = normal
+ij_java_variable_annotation_wrap = normal
+ij_java_do_not_wrap_after_single_annotation = true
+ij_java_do_not_wrap_after_single_annotation_in_parameter = true
+
+# 메서드 체인: 줄을 넘길 때 첫 selector는 receiver 같은 줄, 이후 selector만 각자 줄 (Spotless alignment_for_selector_in_method_invocation=80 대응)
+ij_java_method_call_chain_wrap = on_every_item
+ij_java_wrap_first_method_in_call_chain = false
+
+# ternary(삼항 연산자): 120자 초과 시에만 조건/?값/:값 3줄로 분리하고 ?, :를 다음 줄 앞쪽에 배치
+# (Spotless alignment_for_conditional_expression=48 + wrap_before_conditional_operator=true 대응)
+ij_java_ternary_operation_wrap = on_every_item
+ij_java_ternary_operation_signs_on_next_line = true
+
+# enum 상수: 길이와 무관하게 각 상수를 한 줄씩 강제 분리 — 짧은 enum도 예외 없음.
+# (Spotless alignment_for_enum_constants=49(M_ONE_PER_LINE_SPLIT|M_FORCE) 대응)
+# 추가로 마지막 상수의 trailing comma + ';' 별도 줄 배치는 Spotless build.gradle.kts 의
+# replaceRegex "enum trailing comma + semicolon split" 후처리 단계가 담당한다.
+ij_java_enum_constants_wrap = split_into_lines
+
+# 배열 초기화자({...}): 짧으면 한 줄 유지, 길이 초과 시에만 각 요소를 한 줄씩 분리.
+# '{' 다음 / '}' 앞 강제 줄바꿈은 비활성화 — 짧은 어노테이션 배열(@EqualsAndHashCode(of = {"key"}, ...) 등)이 한 줄로 유지되도록 함.
+# (Spotless alignment_for_expressions_in_array_initializer=48 + insert_new_line_*_brace_in_array_initializer="do not insert" 대응)
+ij_java_array_initializer_wrap = on_every_item
+ij_java_array_initializer_new_line_after_left_brace = false
+ij_java_array_initializer_right_brace_on_new_line = false
+
+# 연속 빈 줄 최대 1줄로 제한 — 코드/선언/'}' 앞 모두 동일 정책
+# (Spotless number_of_empty_lines_to_preserve=1 대응. IntelliJ 기본값 2 → 1로 강화)
+ij_java_keep_blank_lines_in_code = 1
+ij_java_keep_blank_lines_in_declarations = 1
+ij_java_keep_blank_lines_before_right_brace = 1
+
+# import 블록과 타입 선언 사이 빈 줄 1개 (Spotless blank_lines_after_imports=1 일치)
+ij_java_blank_lines_after_imports = 1
+
+# 라인 주석(`//`)과 본문 사이 공백 1칸 강제 — `//given` → `// given`
+ij_java_line_comment_add_space = true
+ij_java_line_comment_add_space_on_reformat = true
+# 라인 주석을 항상 첫 컬럼이 아닌 코드 들여쓰기 위치에 정렬 (`//`이 0번 컬럼으로 튀어 올라가는 것 방지)
+ij_java_line_comment_at_first_column = false
+ij_java_block_comment_at_first_column = false
+
+# import 는 항상 단일 클래스 단위로 — `import java.util.*` 금지
+ij_java_use_single_class_imports = true
+# 동일 패키지에서 N개 이상 import 시 `*` 로 전환하는 임계값 → Integer.MAX_VALUE 로 사실상 비활성화
+ij_java_class_count_to_use_import_on_demand = 2147483647
+# static import 도 동일하게 `*` 전환 비활성화
+ij_java_names_count_to_use_import_on_demand = 2147483647
+# `*` import 를 강제로 사용할 패키지 목록 해제
+ij_java_packages_to_use_import_on_demand = unset
+
+[*.kt]
+# Kotlin 은 연속 라인도 본문과 동일한 4칸 — 코틀린 공식 스타일 가이드 기준
+continuation_indent_size = 4
+
+# Kotlin 도 star import 임계값을 비활성화하여 명시적 import 유지
+ij_kotlin_name_count_to_use_star_import = 2147483647
+ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
+ij_kotlin_packages_to_use_import_on_demand = unset
+
+[*.{yml,yaml,json,xml}]
+indent_style = space
+indent_size = 2
+
+[*.md]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
