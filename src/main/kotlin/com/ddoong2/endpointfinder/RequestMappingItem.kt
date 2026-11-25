@@ -3,10 +3,8 @@ package com.ddoong2.endpointfinder
 import com.intellij.ide.util.PsiNavigationSupport
 import com.intellij.navigation.ItemPresentation
 import com.intellij.navigation.NavigationItem
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.ReadAction
 import com.intellij.openapi.roots.ProjectRootManager
-import com.intellij.openapi.util.Computable
 import com.intellij.pom.Navigatable
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
@@ -16,6 +14,13 @@ class RequestMappingItem(val psiElement: PsiElement, private val urlPath: String
     NavigationItem {
 
     private val navigationElement = psiElement.navigationElement as? Navigatable
+
+    /**
+     * 목록 렌더러는 EDT에서 행을 그릴 때마다 location을 읽는다.
+     * 그때 PSI·모듈 인덱스를 조회하면 read lock 대기와 light class 계산으로 UI freeze가 나므로,
+     * 항목을 만드는 시점(검색 contributor의 background read action 안)에 한 번만 계산해 둔다.
+     */
+    private val locationString: String = computeLocationString(psiElement)
 
     override fun getName(): String = this.requestMethod + " " + this.urlPath
 
@@ -48,20 +53,7 @@ class RequestMappingItem(val psiElement: PsiElement, private val urlPath: String
         // HTTP method is represented by icon, so show only URL path in popup text.
         override fun getPresentableText() = this@RequestMappingItem.urlPath
 
-        override fun getLocationString(): String {
-
-            return ApplicationManager.getApplication().runReadAction(Computable {
-                val psiElement = this@RequestMappingItem.psiElement
-                val fileName = psiElement.containingFile?.name
-                when (psiElement) {
-                    is PsiMethod -> (psiElement.containingClass?.name ?: fileName
-                    ?: "unknownFile") + "." + psiElement.name + getPresentModuleName()
-
-                    is PsiClass -> psiElement.name ?: fileName ?: ("unknownFile" + getPresentModuleName())
-                    else -> "unknownLocation"
-                }
-            })
-        }
+        override fun getLocationString(): String = this@RequestMappingItem.locationString
 
         // Return icon based on HTTP method
         override fun getIcon(b: Boolean) = when (this@RequestMappingItem.requestMethod) {
@@ -72,9 +64,23 @@ class RequestMappingItem(val psiElement: PsiElement, private val urlPath: String
             "PATCH" -> RequestMapperIcons.PATCH
             else -> RequestMapperIcons.DEFAULT
         }
+    }
 
-        private fun getPresentModuleName(): String {
-            val moduleName = getModuleName()
+    private companion object {
+
+        // 호출자가 read access를 가진 상태(검색 contributor의 read action)에서 생성 시 한 번만 호출된다.
+        fun computeLocationString(psiElement: PsiElement): String = when (psiElement) {
+            is PsiMethod -> (psiElement.containingClass?.name ?: psiElement.containingFile?.name
+            ?: "unknownFile") + "." + psiElement.name + presentModuleName(psiElement)
+
+            is PsiClass -> psiElement.name ?: psiElement.containingFile?.name
+            ?: ("unknownFile" + presentModuleName(psiElement))
+
+            else -> "unknownLocation"
+        }
+
+        private fun presentModuleName(element: PsiElement): String {
+            val moduleName = moduleName(element)
             if (moduleName.isEmpty()) {
                 return ""
             }
@@ -86,14 +92,11 @@ class RequestMappingItem(val psiElement: PsiElement, private val urlPath: String
             } + ")"
         }
 
-        private fun getModuleName(): String {
-            return ApplicationManager.getApplication().runReadAction(Computable {
-                val element = this@RequestMappingItem.psiElement
-                val file = element.containingFile.originalFile.virtualFile
-                val module = ProjectRootManager.getInstance(element.project).fileIndex.getModuleForFile(file)
+        private fun moduleName(element: PsiElement): String {
+            val file = element.containingFile.originalFile.virtualFile
+            val module = ProjectRootManager.getInstance(element.project).fileIndex.getModuleForFile(file)
 
-                module?.name ?: ""
-            })
+            return module?.name ?: ""
         }
     }
 }
