@@ -1,20 +1,20 @@
 <div align="center">
-    <a href="https://plugins.jetbrains.com/plugin/17400-restfulhelper">
-        <img src="./src/main/resources/META-INF/pluginIcon.svg" width="220" height="220" alt="logo"/>
-    </a>
+    <img src="./src/main/resources/META-INF/pluginIcon.svg" width="220" height="220" alt="logo"/>
 </div>
-<h1 align="center">RestfulHelper</h1>
-<p align="center">RestfulHelper is for IntelliJ IDEA for quick navigation to URL mapping declarations.</p>
+<h1 align="center">Endpoint Finder</h1>
+<p align="center">Endpoint Finder is an IntelliJ IDEA plugin for quick navigation to URL mapping declarations.</p>
 
 <p align="center">
-<a href="https://github.com/Nayacco/RestfulHelper/actions"><img src="https://github.com/Nayacco/RestfulHelper/workflows/Build/badge.svg"></a>
-<a href="https://plugins.jetbrains.com/plugin/17400-restfulhelper"><img src="https://img.shields.io/jetbrains/plugin/v/17400.svg"></a>
-<a href="https://plugins.jetbrains.com/plugin/17400-restfulhelper"><img src="https://img.shields.io/jetbrains/plugin/d/17400.svg"></a>
+<a href="https://github.com/daejoon/endpoint-finder/actions"><img src="https://github.com/daejoon/endpoint-finder/workflows/Build/badge.svg"></a>
 </p>
 
 <!-- Plugin description -->
 
-This is a fork from [request-mapper](https://plugins.jetbrains.com/plugin/9567-request-mapper). Some bugs have been fixed, and more features will be developed.
+Quickly search and navigate to HTTP endpoint (URL mapping) declarations in Java and Kotlin projects.
+
+This plugin is a fork of [RestfulHelper](https://github.com/Nayacco/RestfulHelper) by Nayacco,
+which itself is a fork of [request-mapper](https://plugins.jetbrains.com/plugin/9567-request-mapper).
+RestfulHelper is no longer maintained, so development continues here.
 
 ## Plugin info 🌵
 
@@ -25,7 +25,7 @@ This is a fork from [request-mapper](https://plugins.jetbrains.com/plugin/9567-r
 
 #### 📙 Supported annotations:
 
-| Spring  | JAX-RS  | Micronaut  | Helidon (JAX-RS) |
+| Spring  | JAX-RS (`javax` / `jakarta`)  | Micronaut  | Helidon (JAX-RS) |
 |:-:|:-:|:-:|:-:|
 | ```@RequestMapping``` | | | |
 | ```@GetMapping``` | ```@GET``` | ```@Get``` | ```@GET``` |
@@ -45,36 +45,29 @@ This is a fork from [request-mapper](https://plugins.jetbrains.com/plugin/9567-r
   - Windows: ```Ctrl + Back slash```
 - Navigate (menu bar) -> Request mapping
 
-## Support the project 🧡
-
-You can support the project by the following actions:
-* Star this project on [GitHub](https://github.com/Nayacco/RestfulHelper)
-* Share this plugin with your friends/colleagues
-* Rate this plugin on [JetBrains plugin repository](https://plugins.jetbrains.com/plugin/17400-restfulhelper)
-* Make pull requests
-* Report bugs
-* Tell your ideas
-
-|  ⚡ **wechat**           | ⚡ **alipay**           |
-| ------------------------ | ------------------------ |
-|<img width=200 src="https://cdn.jsdelivr.net/gh/nayacco/cdn@master/blog/donate_wechat.png"/>|<img width=200 src="https://cdn.jsdelivr.net/gh/nayacco/cdn@master/blog/donate_alipay.png"/>|
-
-> Thanks to the wechat user (*珩) who always gave me ten CNY to remind me that it's time for an update, that's what keeps me updating!
-
 <!-- Plugin description end -->
 
 ## Installation ⏳
 
 - Using IDE built-in plugin system:
   
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "RestfulHelper"</kbd> >
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Endpoint Finder"</kbd> >
   <kbd>Install Plugin</kbd>
   
 - Manually:
 
-  Download the [latest release](https://github.com/Nayacco/RestfulHelper/releases/latest) and install it manually using
+  Download the [latest release](https://github.com/daejoon/endpoint-finder/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+
+## Credits 🙏
+
+- Original project: [RestfulHelper](https://github.com/Nayacco/RestfulHelper) by [Nayacco](https://github.com/Nayacco)
+  ([JetBrains Marketplace](https://plugins.jetbrains.com/plugin/17400-restfulhelper)), licensed under the MIT License.
+- RestfulHelper is based on [request-mapper](https://plugins.jetbrains.com/plugin/9567-request-mapper).
 
 ## License 📄
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](./LICENSE).
+
+- Copyright (c) 2021 Nayacco (original RestfulHelper)
+- Copyright (c) 2026 daejoon (Endpoint Finder modifications)

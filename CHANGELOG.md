@@ -1,9 +1,16 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# RestfulHelper Changelog
+# Endpoint Finder Changelog
+
+> Versions up to 0.4.7-stable were released as [RestfulHelper](https://github.com/Nayacco/RestfulHelper) by Nayacco.
 
 ## [Unreleased]
 
+## [1.0.0]
+
+- Fork RestfulHelper and rename the project to Endpoint Finder (plugin ID `com.ddoong2.endpointfinder`)
+- Rename package `com.github.nayacco.restfulhelper` to `com.ddoong2.endpointfinder`
+- Sort endpoint search results by match tier, URL path and HTTP method
 - Add HTTP method-specific color icons (GET, POST, PUT, DELETE, PATCH) in search popup
 - Add Jakarta EE (`jakarta.ws.rs`) namespace support for JAX-RS annotations
 - Automatically detect `javax.ws.rs` / `jakarta.ws.rs` namespace from annotation qualified name
@@ -97,7 +104,8 @@
 
 - 🎉 release for 2021.2
 
-[Unreleased]: https://github.com/Nayacco/RestfulHelper/compare/v0.4.4-stable...HEAD
+[Unreleased]: https://github.com/daejoon/endpoint-finder/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/daejoon/endpoint-finder/commits/v1.0.0
 [0.4.4-stable]: https://github.com/Nayacco/RestfulHelper/compare/v0.4.3-stable...v0.4.4-stable
 [0.4.3-stable]: https://github.com/Nayacco/RestfulHelper/compare/v0.4.2-stable...v0.4.3-stable
 [0.4.2-stable]: https://github.com/Nayacco/RestfulHelper/compare/v0.4.0-stable...v0.4.2-stable
