@@ -6,6 +6,13 @@
 
 ## [Unreleased]
 
+## [1.1.0]
+
+- Register the JetBrains Marketplace error handler so exception and UI freeze reports reach the plugin developer
+- Fix UI freezes while rendering search results by precomputing the location text instead of reading PSI on the UI thread
+- Cache endpoint scan results until code or project structure changes, avoiding a full project rescan on every keystroke
+- Upgrade Gradle wrapper to 9.9.2
+
 ## [1.0.0]
 
 - Fork RestfulHelper and rename the project to Endpoint Finder (plugin ID `com.ddoong2.endpointfinder`)
@@ -15,6 +22,10 @@
 - Add Jakarta EE (`jakarta.ws.rs`) namespace support for JAX-RS annotations
 - Automatically detect `javax.ws.rs` / `jakarta.ws.rs` namespace from annotation qualified name
 - Rename internal `jaxrs` package to `ws` to reflect support for both namespaces
+- Normalize repeated curly brackets in search input so `{{var}}`-style URLs copied from Postman match `{var}` mappings
+- Show only the URL path in search popup items, since the HTTP method is shown by its icon
+- Fix read access errors when navigating to an endpoint on recent IDE versions
+- Upgrade Gradle to 9.0 and update plugin dependencies
 
 ## [0.4.7-stable]
 
