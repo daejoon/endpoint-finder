@@ -1,17 +1,17 @@
 package com.ddoong2.endpointfinder.annotations
 
-import com.intellij.psi.PsiAnnotation
-import com.intellij.psi.PsiAnnotationMemberValue
-import com.intellij.psi.PsiArrayInitializerMemberValue
-import com.intellij.psi.PsiBinaryExpression
-import com.intellij.psi.PsiPolyadicExpression
-import com.intellij.psi.PsiReferenceExpression
 import com.ddoong2.endpointfinder.annotations.extraction.BasePsiAnnotationValueVisitor
 import com.ddoong2.endpointfinder.annotations.extraction.PsiAnnotationMemberValueExtractor
 import com.ddoong2.endpointfinder.annotations.extraction.PsiArrayInitializerMemberValueExtractor
 import com.ddoong2.endpointfinder.annotations.extraction.PsiBinaryExpressionExtractor
 import com.ddoong2.endpointfinder.annotations.extraction.PsiPolyadicExpressionExtractor
 import com.ddoong2.endpointfinder.annotations.extraction.PsiReferenceExpressionExtractor
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiAnnotationMemberValue
+import com.intellij.psi.PsiArrayInitializerMemberValue
+import com.intellij.psi.PsiBinaryExpression
+import com.intellij.psi.PsiPolyadicExpression
+import com.intellij.psi.PsiReferenceExpression
 
 class PathAnnotation(private val annotation: PsiAnnotation) {
 

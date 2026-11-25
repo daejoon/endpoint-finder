@@ -1,7 +1,7 @@
 package com.ddoong2.endpointfinder.annotations.extraction
 
-import com.intellij.psi.PsiBinaryExpression
 import com.ddoong2.endpointfinder.annotations.extraction.PsiExpressionExtractor.extractExpression
+import com.intellij.psi.PsiBinaryExpression
 
 class PsiBinaryExpressionExtractor : PsiAnnotationValueExtractor<PsiBinaryExpression> {
 

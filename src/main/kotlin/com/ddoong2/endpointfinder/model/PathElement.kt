@@ -9,8 +9,10 @@ import org.apache.commons.text.StringEscapeUtils
 class PathElement(val value: String) {
     val isPathVariable: Boolean = value.inCurlyBrackets()
 
-    fun addPathVariableType(type: String) = if (isPathVariable) PathElement(value.unquoteCurlyBrackets().let { "${type.ifBlank { "String" }}:$it" }.addCurlyBrackets())
-    else this
+    fun addPathVariableType(type: String) =
+        if (isPathVariable) PathElement(value.unquoteCurlyBrackets().let { "${type.ifBlank { "String" }}:$it" }
+            .addCurlyBrackets())
+        else this
 
     private fun compareWithPathVariable(pathElement: PathElement, searchPattern: PathElement): Boolean =
         if (pathElement.isPathVariable && searchPattern.isPathVariable) {
@@ -20,14 +22,17 @@ class PathElement(val value: String) {
         }
 
     private fun comparePathVariables(searchPattern: PathElement, pathElement: PathElement): Boolean {
-        val searchPatternValue = StringEscapeUtils.unescapeJava(searchPattern.value.unquoteCurlyBrackets().substringAfterLast(':'))
-        val pathElementValue = StringEscapeUtils.unescapeJava(pathElement.value.unquoteCurlyBrackets().substringAfterLast(':'))
+        val searchPatternValue =
+            StringEscapeUtils.unescapeJava(searchPattern.value.unquoteCurlyBrackets().substringAfterLast(':'))
+        val pathElementValue =
+            StringEscapeUtils.unescapeJava(pathElement.value.unquoteCurlyBrackets().substringAfterLast(':'))
         return pathElementValue.contains(searchPatternValue)
     }
 
     private fun compareSearchElementWithPathElement(searchPattern: PathElement, pathElement: PathElement): Boolean {
         if (pathElement.value.count { it == ':' } > 1) {
-            val regexString = StringEscapeUtils.unescapeJava(pathElement.value.unquoteCurlyBrackets().substringAfterLast(':'))
+            val regexString =
+                StringEscapeUtils.unescapeJava(pathElement.value.unquoteCurlyBrackets().substringAfterLast(':'))
             return regexString.toRegex().matches(searchPattern.value)
         }
         val bothAreNumbers = isDigit(pathElement.value) && searchPattern.value.isNumeric()

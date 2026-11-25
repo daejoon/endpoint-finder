@@ -14,7 +14,9 @@ abstract class BasePsiAnnotationValueVisitor : PsiAnnotationValueVisitor {
             is PsiReferenceExpression -> visitPsiReferenceExpression(attributeValue)
             is PsiBinaryExpression -> visitPsiBinaryExpression(attributeValue)
             is PsiPolyadicExpression -> visitPsiPolyadicExpression(attributeValue)
-            else -> if (attributeValue != null && attributeValue.text.isNotBlank()) visitPsiAnnotationMemberValue(attributeValue) else emptyList()
+            else -> if (attributeValue != null && attributeValue.text.isNotBlank()) visitPsiAnnotationMemberValue(
+                attributeValue
+            ) else emptyList()
         }
     }
 }

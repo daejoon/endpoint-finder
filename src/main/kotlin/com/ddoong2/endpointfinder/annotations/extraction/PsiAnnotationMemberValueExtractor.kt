@@ -1,8 +1,8 @@
 package com.ddoong2.endpointfinder.annotations.extraction
 
-import com.intellij.psi.PsiAnnotationMemberValue
 import com.ddoong2.endpointfinder.annotations.extraction.PsiExpressionExtractor.extractExpression
 import com.ddoong2.endpointfinder.utils.unquote
+import com.intellij.psi.PsiAnnotationMemberValue
 
 class PsiAnnotationMemberValueExtractor : PsiAnnotationValueExtractor<PsiAnnotationMemberValue> {
 

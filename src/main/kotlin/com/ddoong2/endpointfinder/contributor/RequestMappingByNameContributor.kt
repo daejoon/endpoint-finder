@@ -1,20 +1,20 @@
 package com.ddoong2.endpointfinder.contributor
 
+import com.ddoong2.endpointfinder.RequestMappingItem
+import com.ddoong2.endpointfinder.annotations.MappingAnnotation.Companion.mappingAnnotation
+import com.ddoong2.endpointfinder.annotations.MappingAnnotation.Companion.supportedAnnotations
+import com.ddoong2.endpointfinder.annotations.micronaut.MICRONAUT_PACKAGE_NAME
+import com.ddoong2.endpointfinder.annotations.spring.SPRING_PACKAGE_NAME
+import com.ddoong2.endpointfinder.annotations.ws.JAKARTA_WS_PACKAGE
+import com.ddoong2.endpointfinder.annotations.ws.JAVAX_WS_PACKAGE
+import com.ddoong2.endpointfinder.utils.isMethodAnnotation
 import com.intellij.navigation.ChooseByNameContributor
 import com.intellij.navigation.NavigationItem
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiAnnotation
-import com.ddoong2.endpointfinder.RequestMappingItem
-import com.ddoong2.endpointfinder.annotations.MappingAnnotation.Companion.mappingAnnotation
-import com.ddoong2.endpointfinder.annotations.MappingAnnotation.Companion.supportedAnnotations
-import com.ddoong2.endpointfinder.annotations.ws.JAKARTA_WS_PACKAGE
-import com.ddoong2.endpointfinder.annotations.ws.JAVAX_WS_PACKAGE
-import com.ddoong2.endpointfinder.annotations.micronaut.MICRONAUT_PACKAGE_NAME
-import com.ddoong2.endpointfinder.annotations.spring.SPRING_PACKAGE_NAME
-import com.ddoong2.endpointfinder.utils.isMethodAnnotation
 
 abstract class RequestMappingByNameContributor(
-    private var navigationItems: List<RequestMappingItem> = emptyList()
+    private var navigationItems: List<RequestMappingItem> = emptyList(),
 ) : ChooseByNameContributor {
 
     abstract fun getAnnotationSearchers(annotationName: String, project: Project): Sequence<PsiAnnotation>
@@ -29,7 +29,12 @@ abstract class RequestMappingByNameContributor(
             .toTypedArray()
     }
 
-    override fun getItemsByName(name: String, pattern: String, project: Project, includeNonProjectItems: Boolean): Array<NavigationItem> {
+    override fun getItemsByName(
+        name: String,
+        pattern: String,
+        project: Project,
+        includeNonProjectItems: Boolean,
+    ): Array<NavigationItem> {
         return navigationItems
             .filter { it.name == name }
             .toTypedArray()

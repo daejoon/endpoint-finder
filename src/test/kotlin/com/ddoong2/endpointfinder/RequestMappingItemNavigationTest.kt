@@ -12,7 +12,8 @@ class RequestMappingItemNavigationTest : BasePlatformTestCase() {
     // 테스트 EDT는 lock을 쥐고 있어 실제 IDE(EDT에 암묵적 read lock 없음)를 재현하지 못하므로,
     // lock이 없는 pooled thread에서 호출해 read action 없이 PSI에 접근하면 실패하도록 한다.
     fun testNavigationTargetResolvesSourceOffsetWithoutCallerReadLock() {
-        val file = myFixture.configureByText("UserController.java", "class UserController { void list() {} }") as PsiJavaFile
+        val file =
+            myFixture.configureByText("UserController.java", "class UserController { void list() {} }") as PsiJavaFile
         val method = file.classes.single().methods.single()
         val item = RequestMappingItem(method, "/users", "GET")
 

@@ -1,9 +1,5 @@
 package com.ddoong2.endpointfinder.annotations.ws
 
-import com.intellij.psi.PsiAnnotation
-import com.intellij.psi.PsiLiteralExpression
-import com.intellij.psi.PsiMethod
-import com.intellij.psi.PsiReferenceExpression
 import com.ddoong2.endpointfinder.RequestMappingItem
 import com.ddoong2.endpointfinder.annotations.MappingAnnotation
 import com.ddoong2.endpointfinder.annotations.PathAnnotation
@@ -12,10 +8,14 @@ import com.ddoong2.endpointfinder.annotations.extraction.PsiExpressionExtractor.
 import com.ddoong2.endpointfinder.model.Path
 import com.ddoong2.endpointfinder.model.PathParameter
 import com.ddoong2.endpointfinder.utils.fetchAnnotatedMethod
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiLiteralExpression
+import com.intellij.psi.PsiMethod
+import com.intellij.psi.PsiReferenceExpression
 
 abstract class WsMappingAnnotation(
     private val psiAnnotation: PsiAnnotation,
-    private val urlFormatter: UrlFormatter = WsUrlFormatter
+    private val urlFormatter: UrlFormatter = WsUrlFormatter,
 ) : MappingAnnotation {
 
     // psiAnnotation의 qualifiedName에서 javax/jakarta 네임스페이스를 자동 감지
@@ -48,7 +48,12 @@ abstract class WsMappingAnnotation(
         val parametersNameWithType = method
             .parameterList
             .parameters
-            .mapNotNull { PathParameter(it).extractParameterNameWithType(pathParamAnnotation, ::extractParameterNameFromAnnotation) }
+            .mapNotNull {
+                PathParameter(it).extractParameterNameWithType(
+                    pathParamAnnotation,
+                    ::extractParameterNameFromAnnotation
+                )
+            }
             .toMap()
 
         return method
@@ -66,10 +71,12 @@ abstract class WsMappingAnnotation(
                 val expression = extractExpression(pathVariableValue)
                 expression.ifBlank { defaultValue }
             }
+
             is PsiReferenceExpression -> {
                 val expression = extractExpression(pathVariableValue)
                 expression.ifBlank { defaultValue }
             }
+
             else -> defaultValue
         }
     }

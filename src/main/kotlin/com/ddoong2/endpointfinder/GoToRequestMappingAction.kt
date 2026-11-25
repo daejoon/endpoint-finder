@@ -1,11 +1,11 @@
 package com.ddoong2.endpointfinder
 
+import com.ddoong2.endpointfinder.extensions.Extensions
 import com.intellij.ide.actions.GotoActionBase
 import com.intellij.ide.util.gotoByName.ChooseByNamePopup
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys.PROJECT
 import com.intellij.openapi.project.DumbAware
-import com.ddoong2.endpointfinder.extensions.Extensions
 
 class GoToRequestMappingAction : GotoActionBase(), DumbAware {
 

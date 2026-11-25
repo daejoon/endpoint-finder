@@ -1,12 +1,15 @@
 package com.ddoong2.endpointfinder.model
 
+import com.ddoong2.endpointfinder.utils.unquote
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiParameter
-import com.ddoong2.endpointfinder.utils.unquote
 
 class PathParameter(private val parameter: PsiParameter) {
 
-    fun extractParameterNameWithType(annotationName: String, extractParameterNameFunction: (annotation: PsiAnnotation, defaultValue: String) -> String): Pair<String, String>? {
+    fun extractParameterNameWithType(
+        annotationName: String,
+        extractParameterNameFunction: (annotation: PsiAnnotation, defaultValue: String) -> String,
+    ): Pair<String, String>? {
         val parameterType = parameter.type.presentableText.unquote()
 
         return parameter

@@ -1,14 +1,6 @@
 package com.ddoong2.endpointfinder.annotations
 
-import com.intellij.psi.PsiAnnotation
 import com.ddoong2.endpointfinder.RequestMappingItem
-import com.ddoong2.endpointfinder.annotations.ws.DELETE
-import com.ddoong2.endpointfinder.annotations.ws.GET
-import com.ddoong2.endpointfinder.annotations.ws.HEAD
-import com.ddoong2.endpointfinder.annotations.ws.OPTIONS
-import com.ddoong2.endpointfinder.annotations.ws.PATCH
-import com.ddoong2.endpointfinder.annotations.ws.POST
-import com.ddoong2.endpointfinder.annotations.ws.PUT
 import com.ddoong2.endpointfinder.annotations.micronaut.Delete
 import com.ddoong2.endpointfinder.annotations.micronaut.Get
 import com.ddoong2.endpointfinder.annotations.micronaut.Head
@@ -22,6 +14,14 @@ import com.ddoong2.endpointfinder.annotations.spring.PatchMapping
 import com.ddoong2.endpointfinder.annotations.spring.PostMapping
 import com.ddoong2.endpointfinder.annotations.spring.PutMapping
 import com.ddoong2.endpointfinder.annotations.spring.RequestMapping
+import com.ddoong2.endpointfinder.annotations.ws.DELETE
+import com.ddoong2.endpointfinder.annotations.ws.GET
+import com.ddoong2.endpointfinder.annotations.ws.HEAD
+import com.ddoong2.endpointfinder.annotations.ws.OPTIONS
+import com.ddoong2.endpointfinder.annotations.ws.PATCH
+import com.ddoong2.endpointfinder.annotations.ws.POST
+import com.ddoong2.endpointfinder.annotations.ws.PUT
+import com.intellij.psi.PsiAnnotation
 
 interface MappingAnnotation {
 

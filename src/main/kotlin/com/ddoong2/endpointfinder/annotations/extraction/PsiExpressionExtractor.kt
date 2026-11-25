@@ -1,11 +1,11 @@
 package com.ddoong2.endpointfinder.annotations.extraction
 
+import com.ddoong2.endpointfinder.utils.unquote
 import com.intellij.psi.PsiBinaryExpression
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiPolyadicExpression
 import com.intellij.psi.PsiReferenceExpression
-import com.ddoong2.endpointfinder.utils.unquote
 
 object PsiExpressionExtractor {
 

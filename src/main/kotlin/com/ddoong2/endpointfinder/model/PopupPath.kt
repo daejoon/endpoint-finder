@@ -12,7 +12,8 @@ import com.intellij.psi.codeStyle.NameUtil
  * 다중 Method는 METHOD 자리에 `{GET, POST}`처럼 공백이 섞인 토큰이 온다.
  */
 class PopupPath(popupItem: String) {
-    private val methodToken = if (popupItem.startsWith('{')) popupItem.substringBefore('}') + "}" else popupItem.substringBefore(' ')
+    private val methodToken =
+        if (popupItem.startsWith('{')) popupItem.substringBefore('}') + "}" else popupItem.substringBefore(' ')
 
     // 다중 Method는 첫 Method를 기준으로 정렬한다.
     private val method = methodToken.removePrefix("{").removeSuffix("}").substringBefore(',').trim()
@@ -38,18 +39,20 @@ class PopupPath(popupItem: String) {
 
     // 점수 계산 실패가 탐색을 멈추지 않도록 최저 점수로 대신한다.
     // 경로는 항상 '/'로 시작하므로 이를 떼어야 경로 맨 앞부터의 일치를 start match로 인정받는다.
-    private fun matchingDegree(matcher: MinusculeMatcher): Int = runCatching { matcher.matchingDegree(path.removePrefix("/")) }.getOrDefault(0)
+    private fun matchingDegree(matcher: MinusculeMatcher): Int =
+        runCatching { matcher.matchingDegree(path.removePrefix("/")) }.getOrDefault(0)
 
     private class SortKey(val name: String, val popupPath: PopupPath, val tier: MatchTier, val degree: Int)
 
     companion object {
         private val METHOD_ORDER = listOf("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS")
 
-        private val comparator: Comparator<PopupPath> = compareBy<PopupPath, String>(String.CASE_INSENSITIVE_ORDER) { it.path }
-            .thenBy { it.path }
-            .thenBy { it.methodRank }
-            .thenBy { it.method }
-            .thenBy { it.methodToken.startsWith('{') }
+        private val comparator: Comparator<PopupPath> =
+            compareBy<PopupPath, String>(String.CASE_INSENSITIVE_ORDER) { it.path }
+                .thenBy { it.path }
+                .thenBy { it.methodRank }
+                .thenBy { it.method }
+                .thenBy { it.methodToken.startsWith('{') }
 
         private val sortKeyComparator: Comparator<SortKey> = compareBy<SortKey> { it.tier }
             .thenByDescending { it.degree }

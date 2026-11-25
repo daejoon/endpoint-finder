@@ -1,12 +1,12 @@
 package com.ddoong2.endpointfinder
 
+import com.ddoong2.endpointfinder.extensions.Extensions
 import com.intellij.ide.actions.searcheverywhere.AbstractGotoSEContributor
 import com.intellij.ide.actions.searcheverywhere.SearchEverywhereContributor
 import com.intellij.ide.actions.searcheverywhere.SearchEverywhereContributorFactory
 import com.intellij.ide.util.gotoByName.FilteringGotoByModel
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
-import com.ddoong2.endpointfinder.extensions.Extensions
 
 class RequestMappingGoToContributor(event: AnActionEvent) : AbstractGotoSEContributor(event) {
 

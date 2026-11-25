@@ -54,7 +54,9 @@ class RequestMappingItem(val psiElement: PsiElement, private val urlPath: String
                 val psiElement = this@RequestMappingItem.psiElement
                 val fileName = psiElement.containingFile?.name
                 when (psiElement) {
-                    is PsiMethod -> (psiElement.containingClass?.name ?: fileName ?: "unknownFile") + "." + psiElement.name + getPresentModuleName()
+                    is PsiMethod -> (psiElement.containingClass?.name ?: fileName
+                    ?: "unknownFile") + "." + psiElement.name + getPresentModuleName()
+
                     is PsiClass -> psiElement.name ?: fileName ?: ("unknownFile" + getPresentModuleName())
                     else -> "unknownLocation"
                 }
@@ -77,7 +79,11 @@ class RequestMappingItem(val psiElement: PsiElement, private val urlPath: String
                 return ""
             }
             val names = moduleName.split(""".""")
-            return " (" + if (names.size >= 2) { names[names.size - 2].uppercase() } else { names[0].uppercase() } + ")"
+            return " (" + if (names.size >= 2) {
+                names[names.size - 2].uppercase()
+            } else {
+                names[0].uppercase()
+            } + ")"
         }
 
         private fun getModuleName(): String {

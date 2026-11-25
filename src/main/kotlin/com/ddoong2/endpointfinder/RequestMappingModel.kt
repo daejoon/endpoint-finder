@@ -9,7 +9,8 @@ import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 
-class RequestMappingModel(project: Project, contributors: List<ChooseByNameContributor>) : FilteringGotoByModel<FileType>(project, contributors), DumbAware {
+class RequestMappingModel(project: Project, contributors: List<ChooseByNameContributor>) :
+    FilteringGotoByModel<FileType>(project, contributors), DumbAware {
 
     override fun getItemProvider(context: PsiElement?): ChooseByNameItemProvider {
         return RequestMappingItemProvider()

@@ -2,7 +2,11 @@ package com.ddoong2.endpointfinder
 
 import com.ddoong2.endpointfinder.model.PopupPath
 import com.ddoong2.endpointfinder.utils.collapseRepeatedCurlyBrackets
-import com.intellij.ide.util.gotoByName.*
+import com.intellij.ide.util.gotoByName.ChooseByNameItemProvider
+import com.intellij.ide.util.gotoByName.ChooseByNameModelEx
+import com.intellij.ide.util.gotoByName.ChooseByNamePopup
+import com.intellij.ide.util.gotoByName.ChooseByNameViewModel
+import com.intellij.ide.util.gotoByName.ContributorsBasedGotoByModel
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.psi.codeStyle.NameUtil
 import com.intellij.util.CollectConsumer
@@ -12,8 +16,6 @@ import com.intellij.util.SynchronizedCollectConsumer
 import com.intellij.util.containers.ContainerUtil
 import com.intellij.util.indexing.FindSymbolParameters
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap
-import kotlin.text.MatchResult
-import kotlin.text.isEmpty
 
 open class RequestMappingItemProvider : ChooseByNameItemProvider {
     override fun filterElements(
@@ -21,7 +23,7 @@ open class RequestMappingItemProvider : ChooseByNameItemProvider {
         pattern: String,
         everywhere: Boolean,
         indicator: ProgressIndicator,
-        consumer: Processor<Any>
+        consumer: Processor<Any>,
     ): Boolean {
         if (base.project != null) {
             base.project!!.putUserData(ChooseByNamePopup.CURRENT_SEARCH_PATTERN, pattern)
@@ -43,7 +45,7 @@ open class RequestMappingItemProvider : ChooseByNameItemProvider {
             base: ChooseByNameViewModel,
             pattern: String,
             indicator: ProgressIndicator,
-            parameters: FindSymbolParameters
+            parameters: FindSymbolParameters,
         ): List<String> {
             if (pattern.isEmpty() && !base.canShowListForEmptyPattern()) {
                 return emptyList()
@@ -76,14 +78,18 @@ open class RequestMappingItemProvider : ChooseByNameItemProvider {
             indicator: ProgressIndicator,
             consumer: Processor<Any>,
             namesList: List<String>,
-            parameters: FindSymbolParameters
+            parameters: FindSymbolParameters,
         ): Boolean {
             val sameNameElements: MutableList<Any> = SmartList()
             val qualifierMatchResults: MutableMap<Any, MatchResult> = Reference2ObjectOpenHashMap()
             val model = base.model
             for (name in namesList) {
                 indicator.checkCanceled()
-                val elements = if (model is ContributorsBasedGotoByModel) model.getElementsByName(name, parameters, indicator) else model.getElementsByName(name, everywhere, parameters.completePattern)
+                val elements = if (model is ContributorsBasedGotoByModel) model.getElementsByName(
+                    name,
+                    parameters,
+                    indicator
+                ) else model.getElementsByName(name, everywhere, parameters.completePattern)
                 if (elements.size > 1) {
                     sameNameElements.clear()
                     qualifierMatchResults.clear()

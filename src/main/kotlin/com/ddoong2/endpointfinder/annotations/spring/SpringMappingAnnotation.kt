@@ -1,10 +1,5 @@
 package com.ddoong2.endpointfinder.annotations.spring
 
-import com.intellij.psi.PsiAnnotation
-import com.intellij.psi.PsiAnnotationMemberValue
-import com.intellij.psi.PsiLiteralExpression
-import com.intellij.psi.PsiMethod
-import com.intellij.psi.PsiReferenceExpression
 import com.ddoong2.endpointfinder.RequestMappingItem
 import com.ddoong2.endpointfinder.annotations.MappingAnnotation
 import com.ddoong2.endpointfinder.annotations.PathAnnotation
@@ -13,10 +8,15 @@ import com.ddoong2.endpointfinder.annotations.extraction.PsiExpressionExtractor
 import com.ddoong2.endpointfinder.model.Path
 import com.ddoong2.endpointfinder.model.PathParameter
 import com.ddoong2.endpointfinder.utils.fetchAnnotatedMethod
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiAnnotationMemberValue
+import com.intellij.psi.PsiLiteralExpression
+import com.intellij.psi.PsiMethod
+import com.intellij.psi.PsiReferenceExpression
 
 abstract class SpringMappingAnnotation(
     val psiAnnotation: PsiAnnotation,
-    private val urlFormatter: UrlFormatter = SpringUrlFormatter
+    private val urlFormatter: UrlFormatter = SpringUrlFormatter,
 ) : MappingAnnotation {
 
     override fun values(): List<RequestMappingItem> =
@@ -24,7 +24,11 @@ abstract class SpringMappingAnnotation(
 
     abstract fun extractMethod(): String
 
-    private fun fetchRequestMappingItem(annotation: PsiAnnotation, psiMethod: PsiMethod, methodName: String): List<RequestMappingItem> {
+    private fun fetchRequestMappingItem(
+        annotation: PsiAnnotation,
+        psiMethod: PsiMethod,
+        methodName: String,
+    ): List<RequestMappingItem> {
         val classMappings = fetchMappingsFromClass(psiMethod)
         val methodMappings = fetchMappingsFromMethod(annotation, psiMethod)
         val paramsMappings = fetchMappingsParams(annotation)
@@ -65,7 +69,12 @@ abstract class SpringMappingAnnotation(
         val parametersNameWithType = method
             .parameterList
             .parameters
-            .mapNotNull { PathParameter(it).extractParameterNameWithType(SPRING_PATH_VARIABLE_CLASS, ::extractParameterNameFromAnnotation) }
+            .mapNotNull {
+                PathParameter(it).extractParameterNameWithType(
+                    SPRING_PATH_VARIABLE_CLASS,
+                    ::extractParameterNameFromAnnotation
+                )
+            }
             .toMap()
 
         return fetchMapping(annotation)
@@ -77,19 +86,27 @@ abstract class SpringMappingAnnotation(
         val pathVariableName = annotation.findAttributeValue(NAME)
 
         val valueAttribute = extractPsiAnnotation(pathVariableValue, defaultValue)
-        return if (valueAttribute != defaultValue) valueAttribute else extractPsiAnnotation(pathVariableName, defaultValue)
+        return if (valueAttribute != defaultValue) valueAttribute else extractPsiAnnotation(
+            pathVariableName,
+            defaultValue
+        )
     }
 
-    private fun extractPsiAnnotation(psiAnnotationMemberValue: PsiAnnotationMemberValue?, defaultValue: String): String {
+    private fun extractPsiAnnotation(
+        psiAnnotationMemberValue: PsiAnnotationMemberValue?,
+        defaultValue: String,
+    ): String {
         return when (psiAnnotationMemberValue) {
             is PsiLiteralExpression -> {
                 val expression = PsiExpressionExtractor.extractExpression(psiAnnotationMemberValue)
                 expression.ifBlank { defaultValue }
             }
+
             is PsiReferenceExpression -> {
                 val expression = PsiExpressionExtractor.extractExpression(psiAnnotationMemberValue)
                 expression.ifBlank { defaultValue }
             }
+
             else -> defaultValue
         }
     }
