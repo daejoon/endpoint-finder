@@ -23,6 +23,8 @@
 
     <extensions  defaultExtensionNs="com.intellij">
         <searchEverywhereContributor implementation="com.ddoong2.endpointfinder.RequestMappingGoToContributor$Factory"/>
+        <!-- Marketplace의 Exceptions/Freezes 탭으로 오류·UI freeze 리포트를 받기 위한 등록 -->
+        <errorHandler implementation="com.intellij.diagnostic.JetBrainsMarketplaceErrorReportSubmitter"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.ddoong2.endpointfinder">
