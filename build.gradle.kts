@@ -134,7 +134,7 @@ tasks {
     }
 }
 
-val runIdeForUiTests by intellijPlatformTesting.runIde.registering {
+intellijPlatformTesting.runIde.register("runIdeForUiTests") {
     task {
         jvmArgumentProviders += CommandLineArgumentProvider {
             listOf(
