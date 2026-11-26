@@ -93,6 +93,16 @@ class PopupPathTest {
     }
 
     @Test
+    fun `sortNames - scores matching degree ignoring case of pattern`() {
+        // 대문자 검색어도 소문자 경로와 같은 점수로 매칭돼야 단어 시작 일치("/z/user")가 앞선다.
+        val names = listOf("GET /xuser", "GET /z/user")
+
+        val sorted = PopupPath.sortNames(names, "USER")
+
+        assertEquals(listOf("GET /z/user", "GET /xuser"), sorted)
+    }
+
+    @Test
     fun `sortNames - prefers match starting at path start over higher matching degree in same tier`() {
         // 둘 다 퍼지 일치다. 기본 점수는 "/a/userId"가 더 높지만, "/user/{id}"는 경로 맨 앞부터 일치한다.
         val names = listOf("GET /a/userId", "GET /user/{id}")
