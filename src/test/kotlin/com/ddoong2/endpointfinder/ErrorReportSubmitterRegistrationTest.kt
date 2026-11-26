@@ -13,7 +13,7 @@ class ErrorReportSubmitterRegistrationTest : BasePlatformTestCase() {
 
         val registered = submitters.any {
             it is JetBrainsMarketplaceErrorReportSubmitter
-                && it.pluginDescriptor?.pluginId?.idString == "com.ddoong2.endpointfinder"
+                    && it.pluginDescriptor?.pluginId?.idString == "com.ddoong2.endpointfinder"
         }
 
         assertTrue("Marketplace error handler must be registered by this plugin", registered)

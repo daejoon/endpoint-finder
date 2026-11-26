@@ -64,9 +64,9 @@ abstract class RequestMappingByNameContributor : ChooseByNameContributor {
             .filter { it.isMethodAnnotation() }
             .filter {
                 it.qualifiedName!!.contains(MICRONAUT_PACKAGE_NAME)
-                    || it.qualifiedName!!.contains(SPRING_PACKAGE_NAME)
-                    || it.qualifiedName!!.contains(JAVAX_WS_PACKAGE)
-                    || it.qualifiedName!!.contains(JAKARTA_WS_PACKAGE)
+                        || it.qualifiedName!!.contains(SPRING_PACKAGE_NAME)
+                        || it.qualifiedName!!.contains(JAVAX_WS_PACKAGE)
+                        || it.qualifiedName!!.contains(JAKARTA_WS_PACKAGE)
             }
             .map { annotation -> mappingAnnotation(annotationName, annotation) }
             .flatMap { mappingAnnotation -> mappingAnnotation.values().asSequence() }
