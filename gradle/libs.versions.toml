@@ -6,7 +6,7 @@ apacheText = "1.15.0"
 # plugins
 changelog = "2.5.0"
 intelliJPlatform = "2.20.1"
-kotlin = "2.3.0"
+kotlin = "2.4.21"
 kover = "0.9.5"
 
 [libraries]
