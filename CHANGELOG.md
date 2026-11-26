@@ -6,6 +6,10 @@
 
 ## [Unreleased]
 
+## [1.1.2]
+
+- Replace deprecated `toLightAnnotation` with `UAnnotation.javaPsi` when reading Kotlin request mapping annotations
+
 ## [1.1.1]
 
 - Raise the minimum supported IDE version to 2026.1 (build 261)
