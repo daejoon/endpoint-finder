@@ -27,6 +27,11 @@
         <errorHandler implementation="com.intellij.diagnostic.JetBrainsMarketplaceErrorReportSubmitter"/>
     </extensions>
 
+    <!-- K2 모드에서도 Kotlin 연동(pluginKotlin.xml)이 로드되도록 K2 호환을 선언한다 -->
+    <extensions defaultExtensionNs="org.jetbrains.kotlin">
+        <supportsKotlinPluginMode supportsK2="true"/>
+    </extensions>
+
     <extensions defaultExtensionNs="com.ddoong2.endpointfinder">
         <requestMappingContributor implementation="com.ddoong2.endpointfinder.contributor.JavaRequestMappingContributor"/>
     </extensions>
