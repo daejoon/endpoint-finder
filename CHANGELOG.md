@@ -6,10 +6,14 @@
 
 ## [Unreleased]
 
+## [1.1.1]
+
 - Raise the minimum supported IDE version to 2026.1 (build 261)
 - Declare K2 Kotlin plugin mode support so Kotlin endpoints are found when the K2 mode is enabled
 - Replace `NameUtil.MatchingCaseSensitivity` (scheduled for removal) with `MatchingMode`
 - Replace deprecated `ReadAction.compute` with `ReadAction.computeBlocking`
+- Upgrade Apache Commons Text to 1.15.0
+- Upgrade Kotlin Gradle Plugin to 2.4.21, IntelliJ Platform Gradle Plugin to 2.20.1 and Kover to 0.9.11
 
 ## [1.1.0]
 
