@@ -33,7 +33,7 @@ class RequestMappingItem(val psiElement: PsiElement, private val urlPath: String
      * 최신 IDE는 EDT 이벤트 처리 중에도 read lock을 암묵적으로 잡지 않으므로,
      * PsiElement.navigate()를 바로 부르면 오프셋 계산(AST 로딩)에서 read access assertion이 발생한다.
      */
-    internal fun navigationTarget(): Navigatable? = ReadAction.compute<Navigatable?, RuntimeException> {
+    internal fun navigationTarget(): Navigatable? = ReadAction.computeBlocking<Navigatable?, RuntimeException> {
         when (val element = navigationElement) {
             is PsiElement -> PsiNavigationSupport.getInstance().getDescriptor(element)
             else -> element
