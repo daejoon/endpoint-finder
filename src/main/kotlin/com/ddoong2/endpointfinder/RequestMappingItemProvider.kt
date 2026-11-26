@@ -15,6 +15,7 @@ import com.intellij.util.SmartList
 import com.intellij.util.SynchronizedCollectConsumer
 import com.intellij.util.containers.ContainerUtil
 import com.intellij.util.indexing.FindSymbolParameters
+import com.intellij.util.text.matching.MatchingMode
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap
 
 open class RequestMappingItemProvider : ChooseByNameItemProvider {
@@ -118,7 +119,7 @@ open class RequestMappingItemProvider : ChooseByNameItemProvider {
                     // Normalize so that {{var}}-style input copied from tools like Postman/Mustache
                     // matches a single-brace {var} mapping.
                     val normalizedPattern = pattern.collapseRepeatedCurlyBrackets()
-                    NameUtil.buildMatcher("*$normalizedPattern", NameUtil.MatchingCaseSensitivity.NONE).matches(path)
+                    NameUtil.buildMatcher("*$normalizedPattern", MatchingMode.IGNORE_CASE).matches(path)
                 }
             } catch (e: Exception) {
                 false // no matches appears valid result for "bad" pattern

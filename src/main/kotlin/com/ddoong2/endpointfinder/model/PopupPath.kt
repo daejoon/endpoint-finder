@@ -3,6 +3,7 @@ package com.ddoong2.endpointfinder.model
 import com.ddoong2.endpointfinder.utils.collapseRepeatedCurlyBrackets
 import com.intellij.psi.codeStyle.MinusculeMatcher
 import com.intellij.psi.codeStyle.NameUtil
+import com.intellij.util.text.matching.MatchingMode
 
 /**
  * 검색 팝업 항목 이름(`RequestMappingItem.getName`)을 정렬용으로 해석한다.
@@ -72,7 +73,7 @@ class PopupPath(popupItem: String) {
             val ignoreAccuracy = normalizedPattern.isEmpty()
             // IntelliJ Go To File처럼 경로 맨 앞부터 일치하면 큰 가산점(start match)을 준다. 경로와 맞춰 검색어의 선행 '/'도 뗀다.
             val matcher = if (ignoreAccuracy) null else NameUtil.buildMatcher("*" + collapsedPattern.removePrefix("/"))
-                .withCaseSensitivity(NameUtil.MatchingCaseSensitivity.NONE)
+                .withMatchingMode(MatchingMode.IGNORE_CASE)
                 .preferringStartMatches()
                 .build()
             return names.map { name ->
