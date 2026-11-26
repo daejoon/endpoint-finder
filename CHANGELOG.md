@@ -6,6 +6,11 @@
 
 ## [Unreleased]
 
+- Raise the minimum supported IDE version to 2026.1 (build 261)
+- Declare K2 Kotlin plugin mode support so Kotlin endpoints are found when the K2 mode is enabled
+- Replace `NameUtil.MatchingCaseSensitivity` (scheduled for removal) with `MatchingMode`
+- Replace deprecated `ReadAction.compute` with `ReadAction.computeBlocking`
+
 ## [1.1.0]
 
 - Register the JetBrains Marketplace error handler so exception and UI freeze reports reach the plugin developer
